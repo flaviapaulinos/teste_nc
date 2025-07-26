@@ -1,14 +1,15 @@
----
-title: Teste 1
-emoji: 🦀
-colorFrom: blue
-colorTo: pink
-sdk: gradio
-sdk_version: 5.38.2
+title: Calculadora de Coleta Seletiva e Dashboard BH
+emoji: 🌱
+colorFrom: green
+colorTo: teal
+sdk: streamlit
 app_file: app.py
-pinned: false
-license: mit
-short_description: teste_projeto
 ---
 
-Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+Este aplicativo traz:
+
+✅ Uma **calculadora interativa** que simula os benefícios da coleta seletiva para os cidadãos.
+
+📊 Um **dashboard** com análises sobre os resíduos sólidos na cidade de **Belo Horizonte**, incluindo dados de impacto ambiental e econômico.
+
+Desenvolvido para aumentar a conscientização e incentivar o descarte correto de resíduos.
