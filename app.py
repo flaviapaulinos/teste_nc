@@ -1,9 +1,30 @@
 import streamlit as st
-from utils import show_header, show_footer
+
 
 
 # Configuração de página com layout amplo
 st.set_page_config(layout="wide", page_title="Calculadora de Impacto Ambiental")
+
+# === ADICIONE AQUI O CSS PARA REMOVER A BARRA LATERAL ===
+st.markdown("""
+    <style>
+        section[data-testid="stSidebar"] {
+            display: none !important;
+        }
+        .block-container {
+            padding-top: 2rem;
+            max-width: 100% !important;
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+        header {
+            max-width: 100% !important;
+            left: 0 !important;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+from utils import show_header, show_footer
 
 st.markdown("""
     <style>
