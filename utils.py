@@ -89,10 +89,10 @@ def show_header(show_calculadora=True):
         col1, col2, col3, col4 = st.columns([1, 2, 1, 2])
         if show_calculadora:
             with col2:
-                url = get_page_url("pages/Dashboard.py")
+                url1 = get_page_url("pages/Dashboard.py")
                 st.markdown(
                     f'<div class="nav-link-container">'
-                    f'<a href="{url}">Análise Resíduos BH</a>'
+                    f'<a href="{url1}">Análise Resíduos BH</a>'
                     f'</div>',
                     unsafe_allow_html=True
                 )
@@ -127,10 +127,10 @@ def show_header(show_calculadora=True):
         col1, col2, col3, col4 = st.columns([3, 1, 1, 1])
         if show_calculadora:
             with col2:
-                url = get_page_url("pages/Dashboard.py")
+                url1 = get_page_url("pages/Dashboard.py")
                 st.markdown(
                     f'<div class="nav-link-container">'
-                    f'<a href="{url}">Análise Resíduos BH</a>'
+                    f'<a href="{url1}">Análise Resíduos BH</a>'
                     f'</div>',
                     unsafe_allow_html=True
                 )
@@ -160,7 +160,7 @@ def show_header(show_calculadora=True):
                 )
         
         # Botão "visualize no celular" apenas para desktop
-        with col3:
+        with col1:
             if st.button("visualize no celular"):
                 # Atualiza os parâmetros para forçar mobile
                 new_params = st.query_params.to_dict()
