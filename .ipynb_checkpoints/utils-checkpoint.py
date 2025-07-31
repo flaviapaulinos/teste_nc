@@ -1,12 +1,13 @@
 import streamlit as st
-import os
-from urllib.parse import urlencode
+from urllib.parse import urlencode, parse_qs
 
 def is_mobile():
     """Determina se deve mostrar a versão mobile, considerando a preferência do usuário"""
-    if "force_mobile" in st.query_params:
+    params = st.query_params.to_dict()
+    
+    if "force_mobile" in params:
         return True
-    if "force_desktop" in st.query_params:
+    if "force_desktop" in params:
         return False
     
     try:
@@ -19,23 +20,42 @@ def is_mobile():
         pass
     return False
 
-def get_page_url(page_path):
-    """Gera URL da página com parâmetros atuais preservados"""
+def get_page_url(page_path: str) -> str:
+    """Gera URL para navegação entre páginas preservando parâmetros"""
     params = st.query_params.to_dict()
     
-    # Remove parâmetros de controle se existirem
-    if "force_mobile" in params:
-        del params["force_mobile"]
-    if "force_desktop" in params:
-        del params["force_desktop"]
-        
-    query_string = urlencode(params)
-    return f"{page_path}?{query_string}" if query_string else page_path
+    # Remove parâmetros de controle de visualização
+    params.pop("force_mobile", None)
+    params.pop("force_desktop", None)
+    
+    # Constrói a query string
+    query_string = urlencode(params, doseq=True)
+    return f"?page={page_path}&{query_string}" if query_string else f"?page={page_path}"
+
+def inject_custom_css():
+    """Injeta CSS personalizado para remover estilos de link"""
+    st.markdown(
+        """
+        <style>
+            .nav-link-container a {
+                color: inherit !important;
+                text-decoration: none !important;
+                font-weight: bold !important;
+            }
+            .nav-link-container a:hover {
+                text-decoration: underline !important;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
 def show_header(show_calculadora=True):
+    """Exibe o cabeçalho responsivo com navegação"""
+    inject_custom_css()
     mobile_mode = is_mobile()
     
-    # Adiciona CSS para espaçamento dos links
+    # CSS para espaçamento e estilo dos links
     st.markdown("""
     <style>
         .nav-link-container {
@@ -55,9 +75,7 @@ def show_header(show_calculadora=True):
             padding: 8px 12px;
             border-radius: 4px;
             transition: background-color 0.3s;
-            text-decoration: none;
             color: inherit;
-            font-weight: bold;
         }
         .nav-link:hover {
             background-color: #f0f0f0;
@@ -74,14 +92,14 @@ def show_header(show_calculadora=True):
                 url = get_page_url("pages/Dashboard.py")
                 st.markdown(
                     f'<div class="nav-link-container">'
-                    f'<a href="{url}" class="nav-link">Análise Resíduos BH</a>'
+                    f'<a href="{url}">Análise Resíduos BH</a>'
                     f'</div>',
                     unsafe_allow_html=True
                 )
             with col4:
                 st.markdown(
                     '<div class="nav-link-container">'
-                    '<a href="https://novocicloresiduos.com.br/" class="nav-link">Sobre o Projeto</a>'
+                    '<a href="https://novocicloresiduos.com.br/">Sobre o Projeto</a>'
                     '</div>',
                     unsafe_allow_html=True
                 )
@@ -91,18 +109,19 @@ def show_header(show_calculadora=True):
                 url = get_page_url("app.py")
                 st.markdown(
                     f'<div class="nav-link-container">'
-                    f'<a href="{url}" class="nav-link">Calculadora de impacto coleta seletiva</a>'
+                    f'<a href="{url}">Calculadora de impacto coleta seletiva</a>'
                     f'</div>',
                     unsafe_allow_html=True
                 )
             with col4:
                 st.markdown(
                     '<div class="nav-link-container">'
-                    '<a href="https://novocicloresiduos.com.br/" class="nav-link">Sobre o Projeto</a>'
+                    '<a href="https://novocicloresiduos.com.br/">Sobre o Projeto</a>'
                     '</div>',
                     unsafe_allow_html=True
                 )
     else:
+        # DESKTOP
         st.image("imagem/header.png", use_container_width=True)
         
         col1, col2, col3, col4 = st.columns([3, 1, 1, 1])
@@ -110,12 +129,16 @@ def show_header(show_calculadora=True):
             with col2:
                 url = get_page_url("pages/Dashboard.py")
                 st.markdown(
-                    f'<a href="{url}" class="nav-link">Análise Resíduos BH</a>',
+                    f'<div class="nav-link-container">'
+                    f'<a href="{url}">Análise Resíduos BH</a>'
+                    f'</div>',
                     unsafe_allow_html=True
                 )
             with col4:
                 st.markdown(
-                    '<a href="https://novocicloresiduos.com.br/" class="nav-link">Sobre o Projeto</a>',
+                    '<div class="nav-link-container">'
+                    '<a href="https://novocicloresiduos.com.br/">Sobre o Projeto</a>'
+                    '</div>',
                     unsafe_allow_html=True
                 )
             st.image("imagem/calc_bar.png", use_container_width=True)
@@ -123,17 +146,35 @@ def show_header(show_calculadora=True):
             with col2:
                 url = get_page_url("app.py")
                 st.markdown(
-                    f'<a href="{url}" class="nav-link">Calculadora de impacto coleta seletiva</a>',
+                    f'<div class="nav-link-container">'
+                    f'<a href="{url}">Calculadora de impacto coleta seletiva</a>'
+                    f'</div>',
                     unsafe_allow_html=True
                 )
             with col4:
                 st.markdown(
-                    '<a href="https://novocicloresiduos.com.br/" class="nav-link">Sobre o Projeto</a>',
+                    '<div class="nav-link-container">'
+                    '<a href="https://novocicloresiduos.com.br/">Sobre o Projeto</a>'
+                    '</div>',
                     unsafe_allow_html=True
                 )
+        
+        # Botão "visualize no celular" apenas para desktop
+        with col3:
+            if st.button("visualize no celular"):
+                # Atualiza os parâmetros para forçar mobile
+                new_params = st.query_params.to_dict()
+                new_params["force_mobile"] = "true"
+                if "force_desktop" in new_params:
+                    del new_params["force_desktop"]
+                st.query_params.clear()
+                st.query_params.update(new_params)
 
 def show_footer():
-    if is_mobile():
+    """Exibe o rodapé com opções de visualização"""
+    mobile_mode = is_mobile()
+    
+    if mobile_mode:
         st.image("imagem/logos_mob_fundo.png", use_container_width=True)
     else:
         st.image("imagem/logos.png", use_container_width=True)
@@ -145,25 +186,21 @@ def show_footer():
     
     # Link para versão mobile
     mobile_params = params.copy()
-    mobile_params["force_mobile"] = "1"
-    if "force_desktop" in mobile_params:
-        del mobile_params["force_desktop"]
-    mobile_query = urlencode(mobile_params)
+    mobile_params["force_mobile"] = "true"
+    mobile_params.pop("force_desktop", None)
+    mobile_query = urlencode(mobile_params, doseq=True)
     
     # Link para versão desktop
     desktop_params = params.copy()
-    desktop_params["force_desktop"] = "1"
-    if "force_mobile" in desktop_params:
-        del desktop_params["force_mobile"]
-    desktop_query = urlencode(desktop_params)
+    desktop_params["force_desktop"] = "true"
+    desktop_params.pop("force_mobile", None)
+    desktop_query = urlencode(desktop_params, doseq=True)
     
     # Link para reset
     reset_params = params.copy()
-    if "force_mobile" in reset_params:
-        del reset_params["force_mobile"]
-    if "force_desktop" in reset_params:
-        del reset_params["force_desktop"]
-    reset_query = urlencode(reset_params)
+    reset_params.pop("force_mobile", None)
+    reset_params.pop("force_desktop", None)
+    reset_query = urlencode(reset_params, doseq=True)
     
     st.markdown(f"""
     <div style="text-align: center; margin: 20px 0;">
@@ -178,3 +215,4 @@ def show_footer():
         <small><a href="?{reset_query}" style="color: #666; text-decoration: none;">Restaurar modo padrão</a></small>
     </div>
     """, unsafe_allow_html=True)
+    
