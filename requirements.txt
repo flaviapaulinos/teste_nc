@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 streamlit>=1.42.2
 pandas>=2.2.3
 numpy>=1.24
 matplotlib>=3.7
 seaborn>=0.13.2
 plotly>=5.24.1
+=======
+streamlit==1.42.2
+pandas==2.2.1
+numpy==1.26.4
+matplotlib==3.8.3
+Pillow==10.3.0
+
+>>>>>>> 308a06680915b6e125b8439cb7079b6483a8fa57

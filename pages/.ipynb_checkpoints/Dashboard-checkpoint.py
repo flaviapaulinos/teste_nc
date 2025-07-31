@@ -5,6 +5,7 @@ from utils import show_header, show_footer
 # Configuração de layout amplo
 st.set_page_config(layout="wide")
 
+<<<<<<< HEAD
 # === ADICIONE AQUI O CSS PARA REMOVER A BARRA LATERAL ===
 st.markdown("""
     <style>
@@ -24,6 +25,8 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+=======
+>>>>>>> 308a06680915b6e125b8439cb7079b6483a8fa57
 # Mostra cabeçalho personalizado
 show_header(show_calculadora=False)
 

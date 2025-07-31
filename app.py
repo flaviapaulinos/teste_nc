@@ -1,4 +1,5 @@
 import streamlit as st
+<<<<<<< HEAD
 from utils import show_header, show_footer, is_mobile 
 
 # 1. DEVE SER O PRIMEIRO COMANDO: Configuração de layout responsivo
@@ -23,6 +24,54 @@ show_header(show_calculadora=True)
 
 # === Dados e coeficientes ===
 # Percentuais para coleta seletiva (quando o usuário recicla)
+=======
+
+# Configuração de página com layout amplo
+st.set_page_config(layout="wide", page_title="Calculadora de Impacto Ambiental")
+
+# === ADICIONE AQUI O CSS PARA REMOVER A BARRA LATERAL ===
+st.markdown("""
+    <style>
+        section[data-testid="stSidebar"] {
+            display: none !important;
+        }
+        .block-container {
+            padding-top: 2rem;
+            max-width: 100% !important;
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+        header {
+            max-width: 100% !important;
+            left: 0 !important;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+
+from utils import show_header, show_footer
+
+
+st.markdown("""
+    <style>
+    @font-face {
+        font-family: 'Avenir';
+        src: local('Avenir'), url('https://fonts.cdnfonts.com/s/15335/AvenirLTStd-Roman.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    html, body, [class*="css"] {
+        font-family: 'Avenir', sans-serif;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# No ambiente Render, use render_mode=True
+show_header()
+
+# === Dados e coeficientes ===
+>>>>>>> 308a06680915b6e125b8439cb7079b6483a8fa57
 percentual_coleta_seletiva = {
     'percentual_papel':  0.206745786,
     'percentual_plastico': 0.585485533,
@@ -30,6 +79,7 @@ percentual_coleta_seletiva = {
     'percentual_vidro': 0.112717273,
 }
 
+<<<<<<< HEAD
 # Percentuais para coleta convencional (quando o usuário não recicla)
 percentual_coleta_convencional = {
     'percentual_papel':  0.1529,
@@ -39,6 +89,8 @@ percentual_coleta_convencional = {
 }
 
 # Os demais coeficientes permanecem os mesmos
+=======
+>>>>>>> 308a06680915b6e125b8439cb7079b6483a8fa57
 economia_energia = {
     'papel': 0.009720,
     'plastico': 0.005150,
@@ -109,7 +161,11 @@ def calcular_impactos(kg_total, percentual):
         impactos["Energia economizada (R$)"] += qtd_kg * economia_energia[material] * ipca_2010_2025
         impactos["GEE evitado (tCO₂e)"] += qtd_kg * gee_evitada_tC02e[material]
         impactos["Água evitada (m³)"] += qtd_kg * consumo_agua_evitado_m3[material]
+<<<<<<< HEAD
         impactos["Área de monocultura evitada (ha/ano)"] += qtd_kg * area_monocultura_evitada_ha_ano[material] * 10000
+=======
+        impactos["Área de monocultura evitada (ha/ano)"] += qtd_kg * area_monocultura_evitada_ha_ano[material]*10000
+>>>>>>> 308a06680915b6e125b8439cb7079b6483a8fa57
         impactos["Economia com insumos (R$)"] += qtd_kg * economia_com_insumos[material] * ipca_2010_2025
         impactos["Benefícios sociais(R$)"] += qtd_kg * beneficios_sociais[material] * ipca_2010_2025
 
@@ -126,6 +182,7 @@ def calcular_impactos(kg_total, percentual):
 
 # === Container central para calculadora expandida ===
 with st.container():
+<<<<<<< HEAD
 
         # Adiciona o container principal responsivo
         st.markdown("""
@@ -135,6 +192,13 @@ with st.container():
         st.markdown("""
 <div style='text-align: center; background-color:#f0f2f6; padding:15px; border-radius:5px; margin-top:5px;'>
 Quando a indústria utiliza materiais reciclados, menos árvores, animais e rios são impactados. Esses benefícios são imensos e não podem ser expressos em números; <strong> mas alguns benefícios econômicos, sociais e ambientais podem ser expressos em números.</strong>
+=======
+        st.markdown("""
+
+
+<div style='text-align: center; background-color:#f0f2f6; padding:15px; border-radius:5px; margin-top:5px;'>
+Quando a indústria utiliza materiais reciclados, menos árvores, animais e rios são impactados. Esses benefícios são imensos e não têm como ser expressos em números; <strong> mas alguns benefícios econômicos, sociais e ambientais podem ser expressos em números.</strong>
+>>>>>>> 308a06680915b6e125b8439cb7079b6483a8fa57
 </div>
 """, unsafe_allow_html=True)
         st.markdown(" ")
@@ -158,19 +222,35 @@ Quando a indústria utiliza materiais reciclados, menos árvores, animais e rios
             sacos30_nao_recicla = st.number_input("Sacos 30 litros com lixo convencional", min_value=0, step=1, key="sacos30_nao_recicla")
         
         # === Peso total (em kg por ano - 52 semanas) ===
+<<<<<<< HEAD
         kg_recicla = (sacolas_recicla * peso_sacola_coleta_seletiva + sacos30_recicla * peso_saco_30l_seletiva) * 52
         kg_nao_recicla = (sacolas_nao_recicla * peso_sacola_convencional + sacos30_nao_recicla * peso_saco_30l_convencional) * 52
 
+=======
+        kg_recicla = (sacolas_recicla * peso_sacola_coleta_seletiva + sacos30_recicla * peso_saco_30l_seletiva) * 52.1786
+        kg_nao_recicla = (sacolas_nao_recicla * peso_sacola_convencional + sacos30_nao_recicla * peso_saco_30l_convencional) * 52.1786
+
+    
+        
+>>>>>>> 308a06680915b6e125b8439cb7079b6483a8fa57
         # === Validação e cálculo ===
         if kg_recicla > 0 and kg_nao_recicla > 0:
             st.warning("⚠️ Apenas uma opção por vez: '✅ Você recicla?' ou '🚫 Você ainda não recicla?' ")
         elif kg_recicla > 0:
+<<<<<<< HEAD
             # Usa percentuais de coleta seletiva para quem recicla
+=======
+>>>>>>> 308a06680915b6e125b8439cb7079b6483a8fa57
             impactos = calcular_impactos(kg_recicla, percentual_coleta_seletiva)
             st.markdown("---")
             st.subheader("🌱 Impacto positivo gerado pela sua reciclagem em um ano:")
           
+<<<<<<< HEAD
             # Mostrar resultados em colunas
+=======
+                       
+            # Mostrar resultados em colunas para melhor visualização
+>>>>>>> 308a06680915b6e125b8439cb7079b6483a8fa57
             cols = st.columns(2)
             items = list(impactos.items())
             for i, (k, v) in enumerate(items):
@@ -179,19 +259,38 @@ Quando a indústria utiliza materiais reciclados, menos árvores, animais e rios
                                 f"<b>{k}</b> {v}</div>", 
                                 unsafe_allow_html=True)
             st.markdown("""
+<<<<<<< HEAD
 <div style='background-color:#f0f2f6; padding:15px; border-radius:5px; margin-top:5px;'>
 <strong> Imagine o impacto, se todos os habitantes de Belo Horizonte destinassem corretamente seus resíduos recicláveis!</strong>
 *Fonte: Pesquisa sobre Pagamento por Serviços Ambientais Urbanos para Gestão de Resíduos Sólidos, elaborada pelo Instituto de Pesquisa Econômica Aplicada (IPEA, 2010).<br>
+=======
+
+
+<div style='background-color:#f0f2f6; padding:15px; border-radius:5px; margin-top:5px;'>
+
+<strong> Imagine o impacto, se todos os habitantes de Belo Horizonte destinassem corretamente seus resíduos recicláveis!</strong>
+
+*Fonte: Pesquisa sobre Pagamento por Serviços Ambientais Urbanos para Gestão de Resíduos Sólidos, elaborada pelo Instituto de Pesquisa Econômica Aplicada (IPEA, 2010).<br>
+
+>>>>>>> 308a06680915b6e125b8439cb7079b6483a8fa57
 *Valores corrigidos pelo IPCA
 </div>
 """, unsafe_allow_html=True)       
         elif kg_nao_recicla > 0:
+<<<<<<< HEAD
             # Usa percentuais de coleta convencional para quem não recicla
             impactos = calcular_impactos(kg_nao_recicla, percentual_coleta_convencional)
+=======
+            impactos = calcular_impactos(kg_nao_recicla, percentual_coleta_seletiva)
+>>>>>>> 308a06680915b6e125b8439cb7079b6483a8fa57
             st.markdown("---")
             
             st.subheader("🚮 Impacto positivo que você está **deixando de gerar** em um ano:")
         
+<<<<<<< HEAD
+=======
+            
+>>>>>>> 308a06680915b6e125b8439cb7079b6483a8fa57
             # Mostrar resultados em colunas
             cols = st.columns(2)
             items = list(impactos.items())
@@ -202,14 +301,28 @@ Quando a indústria utiliza materiais reciclados, menos árvores, animais e rios
                                 unsafe_allow_html=True)
             
             st.markdown("""
+<<<<<<< HEAD
 <div style='background-color:#f0f2f6; padding:15px; border-radius:5px; margin-top:20px;'>
 <strong> Imagine o impacto se todos os habitantes de Belo Horizonte destinassem corretamente seus resíduos recicláveis!</strong>
 *Fonte: Pesquisa sobre Pagamento por Serviços Ambientais Urbanos para Gestão de Resíduos Sólidos, elaborada pelo Instituto de Pesquisa Econômica Aplicada (IPEA, 2010).<br>
+=======
+
+
+<div style='background-color:#f0f2f6; padding:15px; border-radius:10px; margin-top:20px;'>
+<strong> Imagine o impacto, se todos os habitantes de Belo Horizonte destinassem corretamente seus resíduos recicláveis!</strong>
+*Fonte: Pesquisa sobre Pagamento por Serviços Ambientais Urbanos para Gestão de Resíduos Sólidos, elaborada pelo Instituto de Pesquisa Econômica Aplicada (IPEA, 2010).<br>
+
+>>>>>>> 308a06680915b6e125b8439cb7079b6483a8fa57
 *Valores corrigidos pelo IPCA
 </div>
 """, unsafe_allow_html=True)
 
+<<<<<<< HEAD
         st.markdown("</div>", unsafe_allow_html=True)
 
 # Rodapé
 show_footer()
+=======
+# === Rodapé ===
+show_footer()
+>>>>>>> 308a06680915b6e125b8439cb7079b6483a8fa57
