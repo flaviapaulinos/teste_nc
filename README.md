@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## ---
 
 ## title: Calculadora de Coleta Seletiva e Dashboard BH
@@ -52,4 +51,3 @@ Este aplicativo traz:
 📊 Um **dashboard** com análises sobre os resíduos sólidos na cidade de **Belo Horizonte**, incluindo dados de impacto ambiental e econômico.
 
 Desenvolvido para aumentar a conscientização e incentivar o descarte correto de resíduos.
->>>>>>> 308a06680915b6e125b8439cb7079b6483a8fa57
